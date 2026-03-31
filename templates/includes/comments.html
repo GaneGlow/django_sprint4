@@ -8,6 +8,7 @@
   </form>
 {% endif %}
 <br>
+
 {% for comment in comments %}
   <div class="media mb-4">
     <div class="media-body">
@@ -20,13 +21,20 @@
       <br>
       {{ comment.text|linebreaksbr }}
     </div>
-    {% if user == comment.author %}
+  </div>
+  
+  {% if user == comment.author %}
+    <div class="comment-actions">
       <a class="btn btn-sm text-muted" href="{% url 'blog:edit_comment' post.id comment.id %}" role="button">
         Отредактировать комментарий
       </a>
       <a class="btn btn-sm text-muted" href="{% url 'blog:delete_comment' post.id comment.id %}" role="button">
         Удалить комментарий
       </a>
-    {% endif %}
-  </div>
+    </div>
+  {% endif %}
+  
+  {% if not forloop.last %}
+    <hr>
+  {% endif %}
 {% endfor %}
