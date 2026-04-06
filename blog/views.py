@@ -147,6 +147,7 @@ def delete_post(request, post_id):
 
 def profile(view_request, username):
     profile_user = get_object_or_404(User, username=username)
+    today = date.today()
     
     if view_request.user == profile_user:
         user_posts_queryset = Post.objects.filter(
@@ -155,7 +156,9 @@ def profile(view_request, username):
     else:
         user_posts_queryset = Post.objects.filter(
             author=profile_user,
-            category_is_published=True,
+            is_published=True,
+            pub_date__lte=today,
+            category__is_published=True,
         ).order_by("-pub_date")
     
     posts_paginator = Paginator(user_posts_queryset, 10)

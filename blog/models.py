@@ -27,6 +27,10 @@ class Category(models.Model):
         verbose_name = "категория"
         verbose_name_plural = "Категории"
 
+    def __str__(self) -> str:
+        # Используется для отображения в формах/админке и в выборках ModelChoiceField.
+        return self.title
+
 
 class Location(models.Model):
     name = models.CharField(
@@ -46,6 +50,10 @@ class Location(models.Model):
     class Meta:
         verbose_name = "местоположение"
         verbose_name_plural = "Местоположения"
+
+    def __str__(self) -> str:
+        # Используется для отображения в формах/админке и в выборках ModelChoiceField.
+        return self.name
 
 
 class Post(models.Model):
