@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 
 
 def about(request):
@@ -27,7 +28,7 @@ def server_error(request):
 
 class RegistrationView(CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('blog:index')
+    success_url = reverse_lazy('blog:index') # ленивое построение url 
     template_name = 'registration/registration_form.html'
     
     def form_valid(self, user_form):
@@ -37,3 +38,10 @@ class RegistrationView(CreateView):
 
 
 registration = RegistrationView.as_view()
+
+
+class CustomLoginView(LoginView):
+    template_name = "registration/login.html"
+
+    def get_success_url(self):
+        return reverse("blog:profile", kwargs={"username": self.request.user.username})

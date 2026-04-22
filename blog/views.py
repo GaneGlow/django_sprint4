@@ -222,8 +222,7 @@ def edit_comment(request, post_id, comment_id):
             return redirect('blog:post_detail', id=post_id)
     else:
         form = CommentForm(instance=comment)
-    
-    # Используем существующий шаблон create.html
+
     return render(request, 'blog/create.html', {'form': form, 'post': comment.post})
 
 
@@ -241,7 +240,7 @@ def delete_comment(request, post_id, comment_id):
     context = {
         'comment': comment,
         'post_id': post_id,
-	'post': comment.post,
+	    'post': comment.post,
     }
 
     return render(request, 'blog/delete.html', context)
